@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# husky import
+. "$(dirname -- "$0")/_/husky.sh"
+
+# helpers import
+. "$PWD/.husky/helpers/colors.sh"
+
+echo -e "\n${BOLD_LIGHT_CYAN}LINTING COMMIT${NO_COLOR}\n" && npx commitlint --edit

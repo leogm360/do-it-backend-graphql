@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# husky import
+. "$(dirname -- "$0")/_/husky.sh"
+
+# helpers import
+. "$PWD/.husky/helpers/colors.sh"
+
+NODE_NO_WARNINGS=1
+
+echo -e "\n${BOLD_LIGHT_CYAN}BUILDING PROJECT${NO_COLOR}" && npm run build
+
+echo -e "\n${BOLD_LIGHT_CYAN}LINTING STAGED${NO_COLOR}\n" && npx lint-staged
