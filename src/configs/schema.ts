@@ -1,11 +1,10 @@
 import * as Joi from 'joi';
-import { TConfigs, TNodeEnv } from '@types';
-
-const NODE_ENVS: TNodeEnv[] = ['dev', 'test', 'stage', 'prod'];
+import { PERMITED_ENVS, DEFAULT_ENV, DEFAULT_PORT } from '@utils';
+import { TConfigs } from '@types';
 
 export const configSchema = Joi.object<TConfigs>({
   env: Joi.string()
-    .valid(...NODE_ENVS)
-    .default('dev'),
-  port: Joi.number().default(3000),
+    .valid(...PERMITED_ENVS)
+    .default(DEFAULT_ENV),
+  port: Joi.number().default(DEFAULT_PORT),
 });

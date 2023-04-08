@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { PrismaModule } from '@prisma';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PrismaModule, PrismaService } from '@prisma';
+import { useGraphQLFactory } from '@utils';
 import { configs, configSchema } from '@configs';
 
 @Module({
@@ -15,6 +18,11 @@ import { configs, configSchema } from '@configs';
         allowUnknown: true,
         abortEarly: true,
       },
+    }),
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      inject: [ConfigService, PrismaService],
+      useFactory: useGraphQLFactory,
     }),
   ],
 })
