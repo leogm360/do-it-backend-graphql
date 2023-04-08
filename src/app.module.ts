@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLResolversModule } from '@graphql/graphql-resolvers.module';
 import { PrismaModule, PrismaService } from '@prisma';
 import { useGraphQLFactory } from '@utils';
 import { configs, configSchema } from '@configs';
@@ -24,6 +25,7 @@ import { configs, configSchema } from '@configs';
       inject: [ConfigService, PrismaService],
       useFactory: useGraphQLFactory,
     }),
+    GraphQLResolversModule,
   ],
 })
 export class AppModule {}

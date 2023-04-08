@@ -15,6 +15,7 @@
       "@types": ["src/types"],
       "@prisma": ["src/prisma"],
       "@utils": ["src/utils"],
+      "@graphql/*": ["src/graphql/*"],
     },
     "incremental": true,
     "skipLibCheck": true,
