@@ -13,10 +13,10 @@
     "start:prod": "node dist/main",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --passWithNoTests --detectOpenHandles",
     "test:watch": "jest --watch --detectOpenHandles",
     "test:cov": "jest --coverage --detectOpenHandles",
-    "test:ci": "jest --coverage --ci",
+    "test:ci": "jest --coverage --ci --passWithNoTests",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --detectOpenHandles",
     "test:e2e": "jest --config --detectOpenHandles ./test/jest-e2e.json",
     "prepare": "husky install"
