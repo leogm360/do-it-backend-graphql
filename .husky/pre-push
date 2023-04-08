@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# husky import
+. "$(dirname -- "$0")/_/husky.sh"
+
+# helpers import
+. "$PWD/.husky/helpers/colors.sh"
+
+trap BLA::stop_loading_animation SIGINT
+
+echo -e "${BOLD_LIGHT_CYAN}LINTING FILES${NO_COLOR}\n" && npm run lint
+
+echo -e "${BOLD_LIGHT_CYAN}RUNNING TESTS${NO_COLOR}\n" && npm run test
