@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String          @id @default(uuid())
+  cpf            String          @unique @db.VarChar(11)
+  cellphone      String          @unique @db.VarChar(11)
+  lastName       String          @map("first_name") @db.VarChar(50)
+  firstName      String          @map("last_name") @db.VarChar(50)
+  authentication Authentication?
+  address        Address?
+  todos          Todo[]
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("users")
+}
+
+model Authentication {
+  id        String   @id @default(uuid())
+  username  String   @unique @db.VarChar(50)
+  email     String   @unique @db.VarChar(50)
+  password  String   @db.VarChar(255)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("authentications")
+}
+
+model Address {
+  id        String          @id @default(uuid())
+  street    String          @db.VarChar(50)
+  number    Int             @db.Integer
+  city      String          @db.VarChar(50)
+  state     BrazileanStates
+  zipCode   String          @map("zip_code") @db.VarChar(8)
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  userId    String          @unique @map("user_id")
+  createdAt DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("addresses")
+}
+
+model TodoToTag {
+  id        String   @id @default(uuid())
+  todo      Todo     @relation(fields: [todoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  todoId    String   @map("todo_id")
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("todos_to_tags")
+}
+
+model Todo {
+  id          String      @id @default(uuid())
+  title       String      @db.VarChar(255)
+  description String?     @db.Text
+  isCompleted Boolean?    @default(false) @map("is_completed") @db.Boolean
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  userId      String      @map("user_id")
+  tags        TodoToTag[]
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("todos")
+}
+
+model Tag {
+  id        String      @id @default(uuid())
+  name      String      @db.VarChar(255)
+  todos     TodoToTag[]
+  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("tags")
+}
+
+enum BrazileanStates {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MT
+  MS
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
+}
