@@ -7,32 +7,38 @@ on:
   pull_request:
     branches: ['main', 'develop', 'stage']
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [lts/hydrogen]
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Node.js ${{ matrix.node-version }}
+      - name: Node.js Version ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+
+      - name: Install
+        run: npm ci
 
       - name: Build
-      - run: npm run build
+        run: npm run build
 
       - name: Test
-      - run: npm run test:ci
+        run: npm run test:ci
 
       - name: Display Coverage
         uses: romeovs/lcov-reporter-action@v0.2.21
         with:
-          github-token: ${{ secrets.REPO_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: ./coverage/lcov.info

@@ -1,3 +1,2 @@
 export * from './schema';
-
-export { configs as default } from './configs';
+export * from './configs';
