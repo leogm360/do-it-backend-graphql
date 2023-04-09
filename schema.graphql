@@ -2,10 +2,139 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Address {
+  city: String!
+  createdAt: DateTime!
+  id: String!
+  number: Float!
+  state: BrazileanStates!
+  street: String!
+  updatedAt: DateTime!
+  userId: String!
+  zipCode: String!
+}
+
+input AddressCreateInput {
+  city: String!
+  createdAt: DateTime
+  id: String
+  number: Float!
+  state: BrazileanStates!
+  street: String!
+  updatedAt: DateTime
+  user: UserCreateNestedOneWithoutAddressInput!
+  zipCode: String!
+}
+
+input AddressInclude {
+  user: Boolean
+}
+
+input AddressOrderByWithRelationInput {
+  city: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  number: SortOrder
+  state: SortOrder
+  street: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+  zipCode: SortOrder
+}
+
+enum AddressScalarFieldEnum {
+  city
+  createdAt
+  id
+  number
+  state
+  street
+  updatedAt
+  userId
+  zipCode
+}
+
+input AddressSelect {
+  city: Boolean
+  createdAt: Boolean
+  id: Boolean
+  number: Boolean
+  state: Boolean
+  street: Boolean
+  updatedAt: Boolean
+  userId: Boolean
+  zipCode: Boolean
+}
+
+input AddressUpdateInput {
+  city: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  number: IntFieldUpdateOperationsInput
+  state: EnumBrazileanStatesFieldUpdateOperationsInput
+  street: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  zipCode: StringFieldUpdateOperationsInput
+}
+
+input AddressWhereInput {
+  AND: [AddressWhereInput!]
+  NOT: [AddressWhereInput!]
+  OR: [AddressWhereInput!]
+  city: StringFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  number: IntFilter
+  state: EnumBrazileanStatesFilter
+  street: StringFilter
+  updatedAt: DateTimeFilter
+  userId: StringFilter
+  zipCode: StringFilter
+}
+
+input AddressWhereUniqueInput {
+  id: String
+  userId: String
+}
+
+enum BrazileanStates {
+  AC
+  AL
+  AM
+  AP
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MG
+  MS
+  MT
+  PA
+  PB
+  PE
+  PI
+  PR
+  RJ
+  RN
+  RO
+  RR
+  RS
+  SC
+  SE
+  SP
+  TO
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
 
 input DateTimeFilter {
   equals: DateTime
@@ -18,6 +147,45 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input EnumBrazileanStatesFieldUpdateOperationsInput {
+  set: BrazileanStates
+}
+
+input EnumBrazileanStatesFilter {
+  equals: BrazileanStates
+  in: [BrazileanStates!]
+  not: NestedEnumBrazileanStatesFilter
+  notIn: [BrazileanStates!]
+}
+
+input IntFieldUpdateOperationsInput {
+  decrement: Float
+  divide: Float
+  increment: Float
+  multiply: Float
+  set: Float
+}
+
+input IntFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: Float
+  lt: Float
+  lte: Float
+  not: NestedIntFilter
+  notIn: Float
+}
+
+type Mutation {
+  addressCreate(data: AddressCreateInput!, include: AddressInclude, select: AddressSelect): Address!
+  addressDelete(include: AddressInclude, select: AddressSelect, where: AddressWhereUniqueInput!): Address!
+  addressUpdate(data: AddressUpdateInput!, include: AddressInclude, select: AddressSelect, where: AddressWhereUniqueInput!): Address!
+  userCreate(data: UserCreateInput!, include: UserInclude, select: UserSelect): User!
+  userDelete(include: UserInclude, select: UserSelect, where: UserWhereUniqueInput!): User!
+  userUpdate(data: UserUpdateInput!, include: UserInclude, select: UserSelect, where: UserWhereUniqueInput!): User!
+}
+
 input NestedDateTimeFilter {
   equals: DateTime
   gt: DateTime
@@ -27,6 +195,24 @@ input NestedDateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input NestedEnumBrazileanStatesFilter {
+  equals: BrazileanStates
+  in: [BrazileanStates!]
+  not: NestedEnumBrazileanStatesFilter
+  notIn: [BrazileanStates!]
+}
+
+input NestedIntFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: Float
+  lt: Float
+  lte: Float
+  not: NestedIntFilter
+  notIn: Float
 }
 
 input NestedStringFilter {
@@ -45,11 +231,10 @@ input NestedStringFilter {
 }
 
 type Query {
-  userCreate(data: UserCreateInput!, include: UserInclude, select: UserSelect): User!
-  userDelete(include: UserInclude, select: UserSelect, where: UserWhereUniqueInput!): User!
+  addressFindMany(cursor: AddressWhereUniqueInput, distinct: [AddressScalarFieldEnum!], include: AddressInclude, orderBy: [AddressOrderByWithRelationInput!], select: AddressSelect, skip: Float, take: Float, where: AddressWhereInput): [Address!]!
+  addressFindUnique(include: AddressInclude, select: AddressSelect, where: AddressWhereUniqueInput!): Address
   userFindMany(cursor: UserWhereUniqueInput, distinct: UserScalarFieldEnum, include: UserInclude, orderBy: UserOrderByWithRelationInput, select: UserSelect, skip: Int, take: Int, where: UserWhereInput): [User!]!
   userFindUnique(include: UserInclude, select: UserSelect, where: UserWhereUniqueInput!): User
-  userUpdate(data: UserUpdateInput!, include: UserInclude, select: UserSelect, where: UserWhereUniqueInput!): User!
 }
 
 enum QueryMode {
@@ -60,6 +245,10 @@ enum QueryMode {
 enum SortOrder {
   asc
   desc
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
 }
 
 input StringFilter {
@@ -96,6 +285,27 @@ input UserCountOutputTypeSelect {
 }
 
 input UserCreateInput {
+  cellphone: String!
+  cpf: String!
+  createdAt: DateTime
+  firstName: String!
+  id: String
+  lastName: String!
+  updatedAt: DateTime
+}
+
+input UserCreateNestedOneWithoutAddressInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutAddressInput
+  create: UserCreateWithoutAddressInput
+}
+
+input UserCreateOrConnectWithoutAddressInput {
+  create: UserCreateWithoutAddressInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutAddressInput {
   cellphone: String!
   cpf: String!
   createdAt: DateTime
