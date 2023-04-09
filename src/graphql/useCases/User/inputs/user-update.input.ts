@@ -1,8 +1,17 @@
-import { InputType, PartialType } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { UserCreateInput } from './user-create.input';
+import {
+  StringFieldUpdateOperationsInput,
+  DateTimeFieldUpdateOperationsInput,
+} from '@graphql/utils';
 
 @InputType()
-export class UserUpdateInput
-  extends PartialType(UserCreateInput)
-  implements Prisma.UserUpdateInput {}
+export class UserUpdateInput implements Prisma.UserUpdateInput {
+  id?: StringFieldUpdateOperationsInput;
+  firstName?: StringFieldUpdateOperationsInput;
+  lastName?: StringFieldUpdateOperationsInput;
+  cpf?: StringFieldUpdateOperationsInput;
+  cellphone?: StringFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  updatedAt?: DateTimeFieldUpdateOperationsInput;
+}
