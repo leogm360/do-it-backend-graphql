@@ -351,13 +351,13 @@ input UserSelect {
 }
 
 input UserUpdateInput {
-  cellphone: String
-  cpf: String
-  createdAt: DateTime
-  firstName: String
-  id: String
-  lastName: String
-  updatedAt: DateTime
+  cellphone: StringFieldUpdateOperationsInput
+  cpf: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  firstName: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  lastName: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
 input UserWhereInput {
